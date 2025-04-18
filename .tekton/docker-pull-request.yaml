@@ -1,0 +1,45 @@
+apiVersion: tekton.dev/v1
+kind: PipelineRun
+metadata:
+  name: demo-python-on-pull-request
+  annotations:
+    pipelinesascode.tekton.dev/on-event: "[pull_request]"
+    pipelinesascode.tekton.dev/on-target-branch: "[chains-att]"
+    pipelinesascode.tekton.dev/max-keep-runs: "2"
+    pipelinesascode.tekton.dev/pipeline: "https://raw.githubusercontent.com/Roming22/tssc-sample-pipelines/chains-att/pac/pipelines/docker-build-rhtap.yaml"
+    pipelinesascode.tekton.dev/task-0: "https://raw.githubusercontent.com/Roming22/tssc-sample-pipelines/chains-att/pac/tasks/init.yaml"
+    pipelinesascode.tekton.dev/task-1: "https://raw.githubusercontent.com/Roming22/tssc-sample-pipelines/chains-att/pac/tasks/git-clone.yaml"
+    pipelinesascode.tekton.dev/task-2: "https://raw.githubusercontent.com/Roming22/tssc-sample-pipelines/chains-att/pac/tasks/buildah-rhtap.yaml"
+  labels:
+    argocd/app-name: demo-python
+    janus-idp.io/tekton: demo-python
+    backstage.io/kubernetes-id: demo-python
+    backstage.io/kubernetes-namespace: rhtap-app
+    app.kubernetes.io/part-of: demo-python
+spec:
+  params:
+    - name: dockerfile
+      value: Dockerfile
+    - name: git-url
+      value: '{{repo_url}}'
+    - name: image-expires-after
+      value: 5d
+    - name: output-image
+      value: rhtap-quay-quay-rhtap-quay.apps.cluster-wpzpn.wpzpn.sandbox1999.opentlc.com/rhtap/demo:on-pr-{{revision}}
+    - name: path-context
+      value: .
+    - name: revision
+      value: '{{revision}}'
+    - name: event-type
+      value: '{{event_type}}'
+  pipelineRef:
+    name: docker-build-rhtap
+  workspaces:
+    - name: workspace
+      volumeClaimTemplate:
+        spec:
+          accessModes:
+            - ReadWriteOnce
+          resources:
+            requests:
+              storage: 1Gi
