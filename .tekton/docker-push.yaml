@@ -4,12 +4,12 @@ metadata:
   name: demo-python-on-push
   annotations:
     pipelinesascode.tekton.dev/on-event: "[push]"
-    pipelinesascode.tekton.dev/on-target-branch: "[chains-att]"
+    pipelinesascode.tekton.dev/on-target-branch: "[chains-att-sig]"
     pipelinesascode.tekton.dev/max-keep-runs: "2"
-    pipelinesascode.tekton.dev/pipeline: "https://raw.githubusercontent.com/Roming22/tssc-sample-pipelines/chains-att/pac/pipelines/docker-build-rhtap.yaml"
-    pipelinesascode.tekton.dev/task-0: "https://raw.githubusercontent.com/Roming22/tssc-sample-pipelines/chains-att/pac/tasks/init.yaml"
-    pipelinesascode.tekton.dev/task-1: "https://raw.githubusercontent.com/Roming22/tssc-sample-pipelines/chains-att/pac/tasks/git-clone.yaml"
-    pipelinesascode.tekton.dev/task-2: "https://raw.githubusercontent.com/Roming22/tssc-sample-pipelines/chains-att/pac/tasks/buildah-rhtap.yaml"
+    pipelinesascode.tekton.dev/pipeline: "https://raw.githubusercontent.com/Roming22/tssc-sample-pipelines/chains-att-sig/pac/pipelines/docker-build-rhtap.yaml"
+    pipelinesascode.tekton.dev/task-0: "https://raw.githubusercontent.com/Roming22/tssc-sample-pipelines/chains-att-sig/pac/tasks/init.yaml"
+    pipelinesascode.tekton.dev/task-1: "https://raw.githubusercontent.com/Roming22/tssc-sample-pipelines/chains-att-sig/pac/tasks/git-clone.yaml"
+    pipelinesascode.tekton.dev/task-2: "https://raw.githubusercontent.com/Roming22/tssc-sample-pipelines/chains-att-sig/pac/tasks/buildah-rhtap.yaml"
   labels:
     argocd/app-name: demo-python
     janus-idp.io/tekton: demo-python
